@@ -1,6 +1,6 @@
 # Go Set
 
-Homogeneous [set](https://en.wikipedia.org/wiki/Set_(abstract_data_type)) type for the Go language.
+[Set](https://en.wikipedia.org/wiki/Set_(abstract_data_type)) type for the Go language.
 
 ## Installation
 
@@ -10,35 +10,34 @@ go get github.com/pvargas/go-set
 
 ## Usage
 
-This set implementation supports Go [comparable types](https://go.dev/ref/spec#Comparison_operators). Non-comparable types are not supported. 
+This set implementation supports Go hashable [comparable types](https://go.dev/ref/spec#Comparison_operators). Non-comparable types are not supported and cannot be used as set elements. 
 
 
 ### Creating a New Set
 
-There are three ways to create a set. The first way is by using the `NewSet` method. 
+There are two ways to create a set. The first way is by using the `NewSet` method. 
 
-`NewSet` is variadic, so any number of arguments can be provided. If no arguments are provided, the desired set type must be specified.
-
-```go
-// Empty set of strings
-words := set.NewSet[string]()
-
-// Set of integers
-primes := set.NewSet(2, 3, 5, 7, 11, 13)
-```
-
-The second way to create a set is by using the `ArrayToSet` method. The resulting set will not contain any repeated elements found in the array.
+`NewSet` is variadic, so any number of arguments can be provided. If no arguments are provided, the desired set type must be specified. The resulting set will not contain any repeated argument values.
 
 ```go
-names := [...]string{"Alice", "Bob", "Bob", "Carol"}
+package example
 
-nameSet := set.ArrayToSet(names)
-fmt.Println(names)
+import "github.com/pvargas/go-set"
+
+// Empty set of runes
+words := set.NewSet[rune]()
+
+// Heterogenous set
+primes := set.NewSet[any](2, "three", 5.0, '7', 11i)
+
+names := []string{"Alice", "Bob", "Bob", "Carol"}
+
+// Set of three elements (Alice, Bob, and Carol) created from a slice of 4 elements. 
+nameSet := set.NewSet(names...)
+
 ```
-`[Alice Bob Carol]`
 
-
-The last way to create a set is by using Go's `make` function.
+The second way to create a set is by using Go's `make` function.
 
 ```go
 someSet := make(set.Set[string])
