@@ -1,5 +1,5 @@
 /*
-Package set implements a set type, an mutable unordered collection of unique elements,
+Package set defines a set type, a mutable, unordered collection of unique elements,
 analogous to Python's set collection, as well as functions to perform typical mathematical set operations.
 
 The underlying type	of this set implementation is a map.
@@ -39,7 +39,7 @@ func (set *Set[T]) Elements() []T {
 	return slices.Collect(maps.Keys(*set))
 }
 
-// Insert takes a value and inserts it into the set.
+// Insert takes a value and adds it to the set.
 func (set *Set[T]) Insert(item T) {
 	(*set)[item] = struct{}{}
 }

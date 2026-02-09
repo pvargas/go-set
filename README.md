@@ -28,11 +28,12 @@ import "github.com/pvargas/go-set"
 words := set.NewSet[rune]()
 
 // Heterogenous set
-primes := set.NewSet[any](2, "three", 5.0, '7', 11i)
+numbers := set.NewSet[any](2, "three", 5.0, '7', 11i)
 
 names := []string{"Alice", "Bob", "Bob", "Carol"}
 
-// Set of three elements (Alice, Bob, and Carol) created from a slice of 4 elements. 
+// Set of three elements (Alice, Bob, and Carol) 
+// created from a slice of four elements. 
 nameSet := set.NewSet(names...)
 
 ```
@@ -43,25 +44,15 @@ The second way to create a set is by using Go's `make` function.
 someSet := make(set.Set[string])
 ```
 
-### Complete Example
+### Basic Operations
 
-```go
-package example
+| Method   | Description                                                                    |
+|----------|--------------------------------------------------------------------------------|
+| Contains | Returns true if the given value is found in the set                            |
+| Elements | Returns a slice containing all members of the set                              |
+| Insert   | Takes a value and adds it to the set                                           |
+| NewSet   | Takes a variable number of arguments and returns a set containing those values |
+| Remove   | Deletes a given value from the set                               |
 
-import	"github.com/pvargas/go-set"
-
-
-func (hp *htmlParser) domains(urls []string) set.Set[string] {
-	domainSet := set.NewSet[string]() // or make(set.Set[string])
-
-	for url := range urls {
-		domain, err := domainFromUrl(url)
-
-		if err != nil {
-    	domainSet.Insert(domain)
-		}
-	}
-
-	return domainSet
-}
-```
+### Mathematical Set Operations
+TBD
