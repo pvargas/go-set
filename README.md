@@ -1,6 +1,6 @@
 # Go Set
 
-[![Build](https://github.com/pvargas/go-set/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pvargas/windmill/actions/workflows/ci.yml)
+[![Build](https://github.com/pvargas/go-set/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pvargas/go-set/actions/workflows/ci.yml)
 
 [Set](https://en.wikipedia.org/wiki/Set_(abstract_data_type)) type for the Go language.
 
