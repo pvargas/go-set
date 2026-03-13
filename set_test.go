@@ -1,6 +1,7 @@
 package set_test
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/pvargas/go-set"
@@ -142,5 +143,37 @@ func TestRemoveMissing(t *testing.T) {
 	if expectedLength != actualLength {
 		t.Errorf("\nActual length: %+v\nExpected length: %+v",
 			actualLength, expectedLength)
+	}
+}
+
+func TestUnion(t *testing.T) {
+	setA := set.NewSet(1, 3, 5)
+	setB := set.NewSet(2, 4, 6)
+	expected := set.NewSet(1, 2, 3, 4, 5, 6)
+
+	actualA := setA.Union(setB)
+
+	if !reflect.DeepEqual(actualA, expected) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualA, expected)
+	}
+
+	actualB := setB.Union(setA)
+
+	if !reflect.DeepEqual(actualB, expected) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualB, expected)
+	}
+
+	// the original sets should not be modified
+	expectedSetA := set.NewSet(1, 3, 5)
+	expectedSetB := set.NewSet(2, 4, 6)
+	if !reflect.DeepEqual(setA, expectedSetA) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			setA, expectedSetA)
+	}
+	if !reflect.DeepEqual(setB, expectedSetB) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			setB, expectedSetB)
 	}
 }

@@ -48,3 +48,13 @@ func (set *Set[T]) Insert(item T) {
 func (set *Set[T]) Remove(item T) {
 	delete(*set, item)
 }
+
+// Union returns a new set containing all elements that are in set A and set B, i.e., A ∪ B.
+func (setA *Set[T]) Union(setB Set[T]) Set[T] {
+	setC := make(Set[T])
+
+	maps.Copy(setC, *setA)
+	maps.Copy(setC, setB)
+
+	return setC
+}
