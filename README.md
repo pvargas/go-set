@@ -1,5 +1,7 @@
 # Go Set
 
+[![Build](https://github.com/pvargas/go-set/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pvargas/windmill/actions/workflows/ci.yml)
+
 [Set](https://en.wikipedia.org/wiki/Set_(abstract_data_type)) type for the Go language.
 
 ## Installation
@@ -52,7 +54,10 @@ someSet := make(set.Set[string])
 | Elements | Returns a slice containing all members of the set                              |
 | Insert   | Takes a value and adds it to the set                                           |
 | NewSet   | Takes a variable number of arguments and returns a set containing those values |
-| Remove   | Deletes a given value from the set                               |
+| Remove   | Deletes a given value from the set                                             |
 
 ### Mathematical Set Operations
-TBD
+
+| Method | Description                                                       |
+|--------|-------------------------------------------------------------------|
+| Union  | Returns a set containing all elements that are in set A and set B |
