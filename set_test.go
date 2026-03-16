@@ -147,9 +147,9 @@ func TestRemoveMissing(t *testing.T) {
 }
 
 func TestUnion(t *testing.T) {
-	setA := set.NewSet(1, 3, 5)
-	setB := set.NewSet(2, 4, 6)
-	expected := set.NewSet(1, 2, 3, 4, 5, 6)
+	setA := set.NewSet(0, 1, 3, 5)
+	setB := set.NewSet(0, 2, 4, 6)
+	expected := set.NewSet(0, 1, 2, 3, 4, 5, 6)
 
 	actualA := setA.Union(setB)
 
@@ -165,9 +165,9 @@ func TestUnion(t *testing.T) {
 			actualB, expected)
 	}
 
-	// the original sets should not be modified
-	expectedSetA := set.NewSet(1, 3, 5)
-	expectedSetB := set.NewSet(2, 4, 6)
+	// the original sets should not have been modified
+	expectedSetA := set.NewSet(0, 1, 3, 5)
+	expectedSetB := set.NewSet(0, 2, 4, 6)
 	if !reflect.DeepEqual(setA, expectedSetA) {
 		t.Errorf("\nActual set: %+v\nExpected set: %+v",
 			setA, expectedSetA)
@@ -175,5 +175,157 @@ func TestUnion(t *testing.T) {
 	if !reflect.DeepEqual(setB, expectedSetB) {
 		t.Errorf("\nActual set: %+v\nExpected set: %+v",
 			setB, expectedSetB)
+	}
+}
+
+func TestDifference(t *testing.T) {
+	setA := set.NewSet(1, 2, 3, 4)
+	setB := set.NewSet(3, 4, 5, 6)
+	expectedAB := set.NewSet(1, 2)
+
+	actualAB := setA.Difference(setB)
+
+	if !reflect.DeepEqual(actualAB, expectedAB) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualAB, expectedAB)
+	}
+
+	expectedBA := set.NewSet(5, 6)
+	actualBA := setB.Difference(setA)
+
+	if !reflect.DeepEqual(actualBA, expectedBA) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualBA, expectedBA)
+	}
+}
+
+func TestSymmetricDifference(t *testing.T) {
+	setA := set.NewSet(1, 2, 3, 4)
+	setB := set.NewSet(0, 2, 3, 5)
+	expected := set.NewSet(0, 1, 4, 5)
+
+	actualA := setA.SymmetricDifference(setB)
+
+	if !reflect.DeepEqual(actualA, expected) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualA, expected)
+	}
+
+	actualB := setB.SymmetricDifference(setA)
+
+	if !reflect.DeepEqual(actualB, expected) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualB, expected)
+	}
+
+	setC := set.NewSet(9, 28, 44)
+	actualC := setA.SymmetricDifference(setC)
+	expectedC := set.NewSet(1, 2, 3, 4, 9, 28, 44)
+
+	if !reflect.DeepEqual(actualC, expectedC) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualC, expectedC)
+	}
+}
+
+func TestIntersection(t *testing.T) {
+	setA := set.NewSet(1, 2, 3, 4)
+	setB := set.NewSet(3, 4, 5, 6)
+	expected := set.NewSet(3, 4)
+
+	actualAB := setA.Intersection(setB)
+
+	if !reflect.DeepEqual(actualAB, expected) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualAB, expected)
+	}
+
+	actualBA := setB.Intersection(setA)
+
+	if !reflect.DeepEqual(actualBA, expected) {
+		t.Errorf("\nActual set: %+v\nExpected set: %+v",
+			actualBA, expected)
+	}
+}
+
+func TestIsSubset(t *testing.T) {
+	setA := set.NewSet("C", "D", "Eb", "F", "G", "Ab", "Bb")
+	setB := set.NewSet("C", "Eb", "G")
+	setC := set.NewSet("C", "Eb", "G", "F#")
+	expectedA := false
+	expectedB := true
+	expectedC := false
+
+	actualA := setA.IsSubset(setB)
+
+	if !reflect.DeepEqual(actualA, expectedA) {
+		t.Errorf("\nActual: %+v\nExpected: %+v",
+			actualA, expectedA)
+	}
+
+	actualB := setB.IsSubset(setA)
+
+	if actualB != expectedB {
+		t.Errorf("\nActual: %+v\nExpected: %+v",
+			actualB, expectedB)
+	}
+
+	actualC := setC.IsSubset(setA)
+
+	if actualC != expectedC {
+		t.Errorf("\nActual: %+v\nExpected: %+v",
+			actualC, expectedC)
+	}
+}
+
+func TestIsProperSubset(t *testing.T) {
+	setA := set.NewSet("C", "Bb", "G", "Eb")
+	setB := set.NewSet("C", "Bb", "G", "Eb")
+	setC := set.NewSet("C", "Eb", "G")
+	expectedA := false
+	expectedC := true
+
+	actualA := setA.IsProperSubset(setB)
+
+	if actualA != expectedA {
+		t.Errorf("\nActual: %+v\nExpected: %+v",
+			actualA, expectedA)
+	}
+
+	actualC := setC.IsProperSubset(setA)
+
+	if actualC != expectedC {
+		t.Errorf("\nActual: %+v\nExpected: %+v",
+			actualC, expectedC)
+	}
+}
+
+func TestIsDisjoint(t *testing.T) {
+	setA := set.NewSet("Eb", "G", "Bb")
+	setB := set.NewSet("D", "F#", "A")
+	setC := set.NewSet("Bb", "D", "F")
+
+	expected := true
+	expectedC := false
+
+	actualA := setA.IsDisjoint(setB)
+
+	if actualA != expected {
+		t.Errorf("\nActual: %+v\nExpected: %+v",
+			actualA, expected)
+	}
+
+	actualB := setB.IsDisjoint(setA)
+
+	if actualB != expected {
+		t.Errorf("\nActual: %+v\nExpected: %+v",
+			actualB, expected)
+	}
+
+	actualC := setC.IsDisjoint(setA)
+
+	if actualC != expectedC {
+		t.Errorf("\nActual: %+v\nExpected: %+v",
+			actualC, expectedC)
 	}
 }
