@@ -13,8 +13,7 @@ func TestNewSetEmpty(t *testing.T) {
 	actualLength := len(testSet)
 
 	if expectedLength != actualLength {
-		t.Errorf("\nResult %+v\nExpected %+v",
-			actualLength, expectedLength)
+		t.Errorf("\nResult %+v\nExpected %+v", actualLength, expectedLength)
 	}
 }
 
@@ -25,8 +24,7 @@ func TestNewSetPopulated(t *testing.T) {
 	actualLength := len(testSet)
 
 	if expectedLength != actualLength {
-		t.Errorf("\nActual length: %+v\nExpected length: %+v",
-			actualLength, expectedLength)
+		t.Errorf("\nActual length: %+v\nExpected length: %+v", actualLength, expectedLength)
 	}
 
 	for _, element := range expectedMembers {
@@ -45,8 +43,7 @@ func TestNewSetUnique(t *testing.T) {
 	actualLength := len(testSet)
 
 	if expectedLength != actualLength {
-		t.Errorf("\nActual length: %+v\nExpected length: %+v",
-			actualLength, expectedLength)
+		t.Errorf("\nActual length: %+v\nExpected length: %+v", actualLength, expectedLength)
 	}
 }
 
@@ -93,8 +90,7 @@ func TestElementsEmpty(t *testing.T) {
 	actualLength := len(emptySet.Elements())
 
 	if expectedLength != actualLength {
-		t.Errorf("\nActual length: %+v\nExpected length: %+v",
-			actualLength, expectedLength)
+		t.Errorf("\nActual length: %+v\nExpected length: %+v", actualLength, expectedLength)
 	}
 }
 
@@ -125,8 +121,7 @@ func TestRemovePresent(t *testing.T) {
 	actualLength := len(testSet)
 
 	if expectedLength != actualLength {
-		t.Errorf("\nActual length: %+v\nExpected length: %+v",
-			actualLength, expectedLength)
+		t.Errorf("\nActual length: %+v\nExpected length: %+v", actualLength, expectedLength)
 	}
 }
 
@@ -141,8 +136,7 @@ func TestRemoveMissing(t *testing.T) {
 	actualLength := len(testSet)
 
 	if expectedLength != actualLength {
-		t.Errorf("\nActual length: %+v\nExpected length: %+v",
-			actualLength, expectedLength)
+		t.Errorf("\nActual length: %+v\nExpected length: %+v", actualLength, expectedLength)
 	}
 }
 
@@ -154,27 +148,23 @@ func TestUnion(t *testing.T) {
 	actualA := setA.Union(setB)
 
 	if !reflect.DeepEqual(actualA, expected) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualA, expected)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualA, expected)
 	}
 
 	actualB := setB.Union(setA)
 
 	if !reflect.DeepEqual(actualB, expected) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualB, expected)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualB, expected)
 	}
 
 	// the original sets should not have been modified
 	expectedSetA := set.NewSet(0, 1, 3, 5)
 	expectedSetB := set.NewSet(0, 2, 4, 6)
 	if !reflect.DeepEqual(setA, expectedSetA) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			setA, expectedSetA)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", setA, expectedSetA)
 	}
 	if !reflect.DeepEqual(setB, expectedSetB) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			setB, expectedSetB)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", setB, expectedSetB)
 	}
 }
 
@@ -186,16 +176,14 @@ func TestDifference(t *testing.T) {
 	actualAB := setA.Difference(setB)
 
 	if !reflect.DeepEqual(actualAB, expectedAB) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualAB, expectedAB)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualAB, expectedAB)
 	}
 
 	expectedBA := set.NewSet(5, 6)
 	actualBA := setB.Difference(setA)
 
 	if !reflect.DeepEqual(actualBA, expectedBA) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualBA, expectedBA)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualBA, expectedBA)
 	}
 }
 
@@ -207,15 +195,13 @@ func TestSymmetricDifference(t *testing.T) {
 	actualA := setA.SymmetricDifference(setB)
 
 	if !reflect.DeepEqual(actualA, expected) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualA, expected)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualA, expected)
 	}
 
 	actualB := setB.SymmetricDifference(setA)
 
 	if !reflect.DeepEqual(actualB, expected) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualB, expected)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualB, expected)
 	}
 
 	setC := set.NewSet(9, 28, 44)
@@ -223,8 +209,7 @@ func TestSymmetricDifference(t *testing.T) {
 	expectedC := set.NewSet(1, 2, 3, 4, 9, 28, 44)
 
 	if !reflect.DeepEqual(actualC, expectedC) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualC, expectedC)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualC, expectedC)
 	}
 }
 
@@ -236,15 +221,13 @@ func TestIntersection(t *testing.T) {
 	actualAB := setA.Intersection(setB)
 
 	if !reflect.DeepEqual(actualAB, expected) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualAB, expected)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualAB, expected)
 	}
 
 	actualBA := setB.Intersection(setA)
 
 	if !reflect.DeepEqual(actualBA, expected) {
-		t.Errorf("\nActual set: %+v\nExpected set: %+v",
-			actualBA, expected)
+		t.Errorf("\nActual set: %+v\nExpected set: %+v", actualBA, expected)
 	}
 }
 
@@ -259,22 +242,19 @@ func TestIsSubset(t *testing.T) {
 	actualA := setA.IsSubset(setB)
 
 	if !reflect.DeepEqual(actualA, expectedA) {
-		t.Errorf("\nActual: %+v\nExpected: %+v",
-			actualA, expectedA)
+		t.Errorf("\nActual: %+v\nExpected: %+v", actualA, expectedA)
 	}
 
 	actualB := setB.IsSubset(setA)
 
 	if actualB != expectedB {
-		t.Errorf("\nActual: %+v\nExpected: %+v",
-			actualB, expectedB)
+		t.Errorf("\nActual: %+v\nExpected: %+v", actualB, expectedB)
 	}
 
 	actualC := setC.IsSubset(setA)
 
 	if actualC != expectedC {
-		t.Errorf("\nActual: %+v\nExpected: %+v",
-			actualC, expectedC)
+		t.Errorf("\nActual: %+v\nExpected: %+v", actualC, expectedC)
 	}
 }
 
@@ -288,15 +268,13 @@ func TestIsProperSubset(t *testing.T) {
 	actualA := setA.IsProperSubset(setB)
 
 	if actualA != expectedA {
-		t.Errorf("\nActual: %+v\nExpected: %+v",
-			actualA, expectedA)
+		t.Errorf("\nActual: %+v\nExpected: %+v", actualA, expectedA)
 	}
 
 	actualC := setC.IsProperSubset(setA)
 
 	if actualC != expectedC {
-		t.Errorf("\nActual: %+v\nExpected: %+v",
-			actualC, expectedC)
+		t.Errorf("\nActual: %+v\nExpected: %+v", actualC, expectedC)
 	}
 }
 
@@ -311,21 +289,18 @@ func TestIsDisjoint(t *testing.T) {
 	actualA := setA.IsDisjoint(setB)
 
 	if actualA != expected {
-		t.Errorf("\nActual: %+v\nExpected: %+v",
-			actualA, expected)
+		t.Errorf("\nActual: %+v\nExpected: %+v", actualA, expected)
 	}
 
 	actualB := setB.IsDisjoint(setA)
 
 	if actualB != expected {
-		t.Errorf("\nActual: %+v\nExpected: %+v",
-			actualB, expected)
+		t.Errorf("\nActual: %+v\nExpected: %+v", actualB, expected)
 	}
 
 	actualC := setC.IsDisjoint(setA)
 
 	if actualC != expectedC {
-		t.Errorf("\nActual: %+v\nExpected: %+v",
-			actualC, expectedC)
+		t.Errorf("\nActual: %+v\nExpected: %+v", actualC, expectedC)
 	}
 }

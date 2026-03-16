@@ -2,7 +2,7 @@
 Package set defines a set type, a mutable, unordered collection of unique elements,
 analogous to Python's set collection, as well as functions to perform typical mathematical set operations.
 
-The underlying type	of this set implementation is a map.
+The underlying type of this set implementation is a map.
 This means that all operations that can be done with maps can also be done with sets.
 */
 package set
