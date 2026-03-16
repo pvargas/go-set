@@ -28,7 +28,6 @@ func NewSet[T comparable](items ...T) Set[T] {
 }
 
 // Contains returns true if the given value is found in the set.
-// Otherwise, returns false.
 func (set *Set[T]) Contains(item T) bool {
 	_, ok := (*set)[item]
 	return ok
@@ -44,12 +43,13 @@ func (set *Set[T]) Insert(item T) {
 	(*set)[item] = struct{}{}
 }
 
-// Remove deletes a given value from the set, if present.
+// Remove deletes a given value from the set.
+// If the value is not present no operation is performed.
 func (set *Set[T]) Remove(item T) {
 	delete(*set, item)
 }
 
-// Union returns a new set containing all elements that are in set A and set B, i.e., A ∪ B.
+// Union returns a set containing all elements from set A and set B.
 func (setA *Set[T]) Union(setB Set[T]) Set[T] {
 	setC := make(Set[T])
 
@@ -57,4 +57,70 @@ func (setA *Set[T]) Union(setB Set[T]) Set[T] {
 	maps.Copy(setC, setB)
 
 	return setC
+}
+
+// Difference returns a set containing all elements from set A that are not members of set B.
+func (setA *Set[T]) Difference(setB Set[T]) Set[T] {
+	setC := make(Set[T])
+
+	for element := range *setA {
+		if !setB.Contains(element) {
+			setC.Insert(element)
+		}
+	}
+
+	return setC
+}
+
+// SymmetricDifference returns a set containing elements which are in either of the sets but not in their intersection.
+func (setA *Set[T]) SymmetricDifference(setB Set[T]) Set[T] {
+	setC := make(Set[T])
+
+	for element := range *setA {
+		if !setB.Contains(element) {
+			setC.Insert(element)
+		}
+	}
+
+	for element := range setB {
+		if !setA.Contains(element) {
+			setC.Insert(element)
+		}
+	}
+
+	return setC
+}
+
+// Intersection returns a set containing only the elements from set A that are also elements of set B.
+func (setA *Set[T]) Intersection(setB Set[T]) Set[T] {
+	setC := make(Set[T])
+
+	for element := range *setA {
+		if setB.Contains(element) {
+			setC.Insert(element)
+		}
+	}
+
+	return setC
+}
+
+// IsSubset returns true if set A is a subset of set B.
+func (setA *Set[T]) IsSubset(setB Set[T]) bool {
+	for element := range *setA {
+		if !setB.Contains(element) {
+			return false
+		}
+	}
+
+	return true
+}
+
+// IsProperSubset returns true if set A is a proper subset of set B.
+func (setA *Set[T]) IsProperSubset(setB Set[T]) bool {
+	return setA.IsSubset(setB) && len(*setA) < len(setB)
+}
+
+// IsDisjoint returns true if the two sets do not intersect.
+func (setA *Set[T]) IsDisjoint(setB Set[T]) bool {
+	return len(setA.Intersection(setB)) == 0
 }
