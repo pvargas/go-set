@@ -117,18 +117,10 @@ func (setA *Set[T]) IsSubset(setB Set[T]) bool {
 
 // IsProperSubset returns true if set A is a proper subset of set B.
 func (setA *Set[T]) IsProperSubset(setB Set[T]) bool {
-	if setA.IsSubset(setB) && len(*setA) < len(setB) {
-		return true
-	}
-
-	return false
+	return setA.IsSubset(setB) && len(*setA) < len(setB)
 }
 
 // IsDisjoint returns true if the two sets do not intersect.
 func (setA *Set[T]) IsDisjoint(setB Set[T]) bool {
-	if len(setA.Intersection(setB)) == 0 {
-		return true
-	}
-
-	return false
+	return len(setA.Intersection(setB)) == 0
 }
